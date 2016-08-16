@@ -51,4 +51,28 @@ func main() {
 	}
 
 	fmt.Printf("First of 2 is %v\n", first)
+
+	p5 := longOperation(2)
+	go func() {
+		val, err := p5.Wait()
+		if err != nil {
+			return
+		}
+		fmt.Printf("Routine 1: %v\n", val)
+	}()
+	go func() {
+		val, err := p5.Wait()
+		if err != nil {
+			return
+		}
+		fmt.Printf("Routine 2: %v\n", val)
+	}()
+	v5, err := p5.Wait()
+	if err != nil {
+		return
+	}
+	fmt.Printf("Main thread: %v\n", v5)
+	for {
+		// block
+	}
 }
