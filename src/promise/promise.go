@@ -32,9 +32,15 @@ func (p *P) Wait() (ret interface{}, err error) {
 }
 
 func (p *P) Fulfill(arg interface{}) {
+	if p.settled {
+		return
+	}
 	p.valueChan <- arg
 }
 
 func (p *P) Reject(arg error) {
+	if p.settled {
+		return
+	}
 	p.errChan <- arg
 }
