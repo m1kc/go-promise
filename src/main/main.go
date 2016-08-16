@@ -10,7 +10,9 @@ import (
 func longOperation(n uint64) (ret *promise.P) {
 	ret = promise.New()
 	go func() {
-		<-time.After(2 * time.Second)
+		for i := uint64(0); i < n; i++ {
+			<-time.After(time.Second)
+		}
 		ret.Fulfill(n*10 + n)
 	}()
 	return
@@ -26,24 +28,18 @@ func main() {
 		}
 	}()
 
-	p1 := longOperation(1)
-	p2 := longOperation(3)
+	p1 := longOperation(3)
+	p2 := longOperation(2)
 
-	v2, err := p2.Wait()
+	values, err := promise.All([]*promise.P{p1, p2})
 	if err != nil {
 		return
 	}
-	vv2 := v2.(uint64)
 
-	fmt.Printf("Value 2 is %v\n", vv2)
+	v1 := values[0].(uint64)
+	v2 := values[1].(uint64)
 
-	v1, err := p1.Wait()
-	if err != nil {
-		return
-	}
-	vv1 := v1.(uint64)
-
-	fmt.Printf("Value 1 is %v\n", vv1)
-
-	fmt.Printf("Sum is %v\n", vv1+vv2)
+	fmt.Printf("Value 1 is %v\n", v1)
+	fmt.Printf("Value 2 is %v\n", v2)
+	fmt.Printf("Sum is %v\n", v1+v2)
 }

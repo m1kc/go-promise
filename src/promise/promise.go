@@ -12,13 +12,6 @@ type P struct {
 	errChan   chan error
 }
 
-func New() *P {
-	return &P{
-		valueChan: make(chan interface{}, 1),
-		errChan:   make(chan error, 1),
-	}
-}
-
 func (p *P) Wait() (ret interface{}, err error) {
 	// If settled, return immediately
 	if p.settled {
