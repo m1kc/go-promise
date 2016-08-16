@@ -72,7 +72,18 @@ func main() {
 		return
 	}
 	fmt.Printf("Main thread: %v\n", v5)
-	for {
-		// block
+
+	m := make(map[string]aminus.Promise)
+	m["first"] = longOperation(1)
+	m["second"] = longOperation(2)
+	m["third"] = longOperation(3)
+	m["forth"] = longOperation(4)
+
+	m2, err := quad.Map(m)
+	if err != nil {
+		return
+	}
+	for key, value := range m2 {
+		fmt.Printf("%v -> %v\n", key, value)
 	}
 }

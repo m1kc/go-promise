@@ -4,6 +4,8 @@ import (
 	"aminus"
 )
 
+// All waits for all promises to be settled and returns their values as array
+// or an error, if any of them was rejected.
 func All(arg ...aminus.Promise) (ret []interface{}, err error) {
 	ret = make([]interface{}, 0, len(arg))
 	for _, p := range arg {
@@ -14,16 +16,4 @@ func All(arg ...aminus.Promise) (ret []interface{}, err error) {
 		ret = append(ret, result)
 	}
 	return
-}
-
-func Race(arg ...aminus.Promise) (ret interface{}, err error) {
-	ch := make(chan aminus.Promise, len(arg))
-	for _, p := range arg {
-		go func(p aminus.Promise) {
-			<-p.When()
-			ch <- p
-		}(p)
-	}
-	first := <-ch
-	return first.Wait()
 }
