@@ -9,7 +9,7 @@ func New() *P {
 	}
 }
 
-func All(arg []*P) (ret []interface{}, err error) {
+func All(arg ...*P) (ret []interface{}, err error) {
 	ret = make([]interface{}, 0, len(arg))
 	for _, p := range arg {
 		result, err := p.Wait()

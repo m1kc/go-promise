@@ -20,9 +20,7 @@ func longOperation(n uint64) (ret *promise.P) {
 
 func main() {
 	go func() {
-		i := 0
-		for {
-			i++
+		for i := 1; true; i++ {
 			<-time.After(1 * time.Second)
 			fmt.Printf("... %d sec\n", i)
 		}
@@ -31,7 +29,7 @@ func main() {
 	p1 := longOperation(3)
 	p2 := longOperation(2)
 
-	values, err := promise.All([]*promise.P{p1, p2})
+	values, err := promise.All(p1, p2)
 	if err != nil {
 		return
 	}
