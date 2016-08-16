@@ -1,15 +1,13 @@
 # go-promise
 
-Go promise implementation heavily influenced by JavaScript
-[Promise A+ spec](https://promisesaplus.com/).
+Go promise implementation heavily influenced by JavaScript [Promise A+ spec](https://promisesaplus.com/).
 
 
 ## General specification
 
 ### 1. Terminology
 
-- **Promise** is a structure with the `Wait()` method whose behavior
-conforms to this specification.
+- **Promise** is a structure with the `Wait()` method whose behavior conforms to this specification.
 - **Waitable** is a structure that defines a `Wait()` method.
 - **Value** is any legal Go value (generally, an `interface{}`).
 - **Error** is a Go error.
@@ -19,8 +17,7 @@ conforms to this specification.
 
 #### 2.1. Promise States
 
-A promise must be in one of three states: pending, fulfilled,
-or rejected.
+A promise must be in one of three states: pending, fulfilled, or rejected.
 
 Fulfilled and rejected promises are generally called settled.
 
@@ -33,8 +30,7 @@ Fulfilled and rejected promises are generally called settled.
     - must not transition to any other state.
     - must have a reason, which must not change.
 
-Here, “must not change” means immutable identity, but does not imply
-deep immutability.
+Here, “must not change” means immutable identity, but does not imply deep immutability.
 
 #### 2.2. The `Wait()` method
 
@@ -42,6 +38,4 @@ deep immutability.
 
     func (p *Promise) Wait() (ret interface{}, err error)
 
-When it's called on a pending promise, the goroutine blocks
-until it's settled. When called on a settled promise, the method
-returns immediately.
+When it's called on a pending promise, the goroutine blocks until it's settled. When called on a settled promise, the method returns immediately.
