@@ -1,13 +1,15 @@
 package main
 
 import (
-	"promise"
+	"aminus"
+	"bird"
+	"quad"
 
 	"fmt"
 	"time"
 )
 
-func longOperation(n uint64) (ret *promise.P) {
+func longOperation(n uint64) (ret aminus.Promise) {
 	ret = promise.New()
 	go func() {
 		for i := uint64(0); i < n; i++ {
@@ -29,7 +31,7 @@ func main() {
 	p1 := longOperation(3)
 	p2 := longOperation(2)
 
-	values, err := promise.All(p1, p2)
+	values, err := quad.All(p1, p2)
 	if err != nil {
 		return
 	}
@@ -40,4 +42,13 @@ func main() {
 	fmt.Printf("Value 1 is %v\n", v1)
 	fmt.Printf("Value 2 is %v\n", v2)
 	fmt.Printf("Sum is %v\n", v1+v2)
+
+	p3 := longOperation(3)
+	p4 := longOperation(2)
+	first, err := quad.Race(p3, p4)
+	if err != nil {
+		return
+	}
+
+	fmt.Printf("First of 2 is %v\n", first)
 }
