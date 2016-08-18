@@ -3,7 +3,7 @@ go-promise
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/m1kc/go-promise)](https://goreportcard.com/report/github.com/m1kc/go-promise)
 
-Go promise implementation heavily influenced by JavaScript [Promise A+ spec](https://promisesaplus.com/).
+Go promise implementation heavily influenced by JavaScript [Promise A+ spec](https://promisesaplus.com/). Warning: not production-ready.
 
 
 ## General specification
